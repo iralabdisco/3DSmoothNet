@@ -31,7 +31,7 @@ bool processCommandLine(int argc, char** argv,
 	float &support_radius,
 	int &num_voxels,
 	float &smoothing_kernel_width,
-	std::string &file_keypoints,
+	float &perc_points,
 	std::string &output_folder)
 {
 	try
@@ -46,8 +46,8 @@ bool processCommandLine(int argc, char** argv,
 				"Number of voxels in a side of the grid. Whole grid is nxnxn.")
 			("smoothingKernelWidth,h", po::value<float>(&smoothing_kernel_width)->default_value(1.75),
 				"Width of the Gaussia kernel used for smoothing.")
-			("fileKeypoints,k", po::value<std::string>(&file_keypoints)->default_value("0"),
-				"Path to the file with the indices of the interest points. If 0, SDV voxel grid representation if computed for all the points")
+			("frac_points,k", po::value<float>(&perc_points)->default_value(0.01),
+				"Fraction of randomly sampled points to use as keypoints")
 			("outputFolder,o", po::value<std::string>(&output_folder)->default_value("./data/sdv_voxel_grid/"),
 				"Output folder path.")
 			;

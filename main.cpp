@@ -9,7 +9,8 @@ Purpose: executes the computation of the SDV voxel grid for the selected interes
 */
 
 #include <chrono>
-#include <pcl/io/ply_io.h>
+#include <pcl/io/pcd_io.h>
+#include <pcl/filters/random_sample.h>
 #include "core/core.h"
 
 
@@ -23,11 +24,11 @@ int main(int argc, char *argv[])
     float radius;
     int num_voxels;
     float smoothing_kernel_width;
-    std::string interest_points_file;
+    float perc_points = 0.01;
     std::string output_folder;
 
     // Get command line arguments
-    bool result = processCommandLine(argc, argv, data_file, radius, num_voxels, smoothing_kernel_width, interest_points_file, output_folder);
+    bool result = processCommandLine(argc, argv, data_file, radius, num_voxels, smoothing_kernel_width, perc_points, output_folder);
     if (!result)
         return 1;
 
@@ -43,7 +44,7 @@ int main(int argc, char *argv[])
 
     pcl::PointCloud<pcl::PointXYZ>::Ptr cloud(new pcl::PointCloud<pcl::PointXYZ>);
     if (fileExist(data_file))
-        pcl::io::loadPLYFile(data_file, *cloud);
+        pcl::io::loadPCDFile(data_file, *cloud);
     else
     {
         std::cout << "Point cloud file does not exsist or cannot be opened!!" << std::endl;
@@ -73,31 +74,11 @@ int main(int argc, char *argv[])
     std::string flag_all_points = "0";
     std::vector<int> evaluation_points;
 
-    // Erase /r at the end of the filename (needed in linux environment)
-    interest_points_file.erase(std::remove(interest_points_file.begin(), interest_points_file.end(), '\r'), interest_points_file.end());
-
-    // If the keypoint file is not given initialize the ecaluation points with all the points in the point cloud
-    if (!interest_points_file.compare(flag_all_points))
-    {
-        std::vector<int> ep_temp(cloud->width);
-        std::iota(ep_temp.begin(), ep_temp.end(), 0);
-        evaluation_points = ep_temp;
-        ep_temp.clear();
-    }
-    else
-    {
-        if (fileExist(interest_points_file))
-        {
-            std::vector<int> ep_temp = readKeypoints(interest_points_file);
-            evaluation_points = ep_temp;
-            ep_temp.clear();
-        }
-        else
-        {
-            std::cout << "Keypoint file does not exsist or cannot be opened!!" << std::endl;
-            return 1;
-        }
-    }
+    pcl::RandomSample <pcl::PointXYZ> random_sampling;
+    random_sampling.setInputCloud(cloud);
+    random_sampling.setSeed (std::rand ());
+    random_sampling.setSample(perc_points*cloud->size());
+    random_sampling.filter(evaluation_points);
 
     std::cout << "Number of keypoints:" << evaluation_points.size() << "\n" << std::endl;
 

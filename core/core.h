@@ -32,7 +32,7 @@ typedef pcl::PointNormal PointNormalT;
 typedef pcl::PointCloud<PointNormalT> PointCloudWithNormals;
 
 //	Utility functions
-bool processCommandLine(int argc, char** argv, std::string &file_cloud, float &support_radius, int &num_voxels, float &smoothing_kernel_width, std::string &file_keypoints, std::string &output_folder);
+bool processCommandLine(int argc, char** argv, std::string &file_cloud, float &support_radius, int &num_voxels, float &smoothing_kernel_width, float& perc_points, std::string &output_folder);
 std::vector<int> readKeypoints(std::string filename);
 bool fileExist(const std::string& name);
 void saveVector(std::string filename, const std::vector<std::vector<float>> descriptor);
