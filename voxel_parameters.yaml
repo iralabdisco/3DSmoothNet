@@ -1,0 +1,7 @@
+gauss_width: 1.75
+input_pcd_dir: /SSD/neural_comparison/point_clouds_registration_benchmark/datasets_outlier_removal_mean10_dev3_voxelgrid_0.05/planetary/box_met/
+num_points: 5000
+output_dir: /SSD/neural_comparison/features/3DSmoothNet/planetary/box_met/
+problem_file: /SSD/neural_comparison/point_clouds_registration_benchmark/devel/registration_pairs/box_met_global.txt
+vox_num: 16
+voxel_size: 0.5

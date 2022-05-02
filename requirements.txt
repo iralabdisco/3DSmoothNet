@@ -1,4 +1,4 @@
-glob3
+glob2
 numpy==1.14.5
 open3d-python
 parse==1.12.0

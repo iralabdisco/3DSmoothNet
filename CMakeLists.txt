@@ -2,7 +2,7 @@ cmake_minimum_required( VERSION 2.8 )
 
 # Create Project
 project (3DSmoothNet)
-
+set (CMAKE_CXX_STANDARD 11)
 add_executable(3DSmoothNet
   main.cpp
   core/core.cpp
@@ -14,7 +14,7 @@ add_executable(3DSmoothNet
 set_property( DIRECTORY PROPERTY VS_STARTUP_PROJECT "project" )
 
 # Find Packages
-find_package( PCL 1.8 REQUIRED )
+find_package( PCL 1.7 REQUIRED )
 
 if( PCL_FOUND )
   # [C/C++]>[General]>[Additional Include Directories]
