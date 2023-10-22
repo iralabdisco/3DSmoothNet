@@ -539,7 +539,7 @@ void computeLocalDepthFeature(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud,
     }
 
     // Create the name with the radius, number of voxels and the smoothing factor
-    saving_path_file = saveFileName + "_" + std::to_string(sup_radius) + "_" + std::to_string(num_voxels) + "_" + std::to_string(smoothing_factor * num_voxels / sup_radius) + ".csv";
+    saving_path_file = saveFileName + ".csv";
 
 
     // Write descriptor to CSV file

@@ -11,6 +11,8 @@ Purpose: executes the computation of the SDV voxel grid for the selected interes
 #include <chrono>
 #include <pcl/io/pcd_io.h>
 #include <pcl/filters/random_sample.h>
+#include <pcl/filters/filter.h>
+#include <pcl/filters/extract_indices.h>
 #include "core/core.h"
 
 
@@ -40,7 +42,7 @@ int main(int argc, char *argv[])
     }
 
     // Read in the point cloud using the ply reader
-    std::cout << "Config parameters successfully read in!! \n" << std::endl;
+    // std::cout << "Config parameters successfully read in!! \n" << std::endl;
 
     pcl::PointCloud<pcl::PointXYZ>::Ptr cloud(new pcl::PointCloud<pcl::PointXYZ>);
     if (fileExist(data_file))
@@ -50,12 +52,14 @@ int main(int argc, char *argv[])
         std::cout << "Point cloud file does not exsist or cannot be opened!!" << std::endl;
         return 1;
     }
+    std::vector<int> nans;
+    pcl::removeNaNFromPointCloud(*cloud, *cloud, nans);
 
-    std::cout << "File: " << data_file << std::endl;
-    std::cout << "Number of Points: " << cloud->size() << std::endl;
-    std::cout << "Size of the voxel grid: " << 2 * radius << std::endl; // Multiplied with two as half size is used (corresponding to the radius)
-    std::cout << "Number of Voxels: " << num_voxels << std::endl;
-    std::cout << "Smoothing Kernel: " << smoothing_kernel_width << std::endl;
+    // std::cout << "File: " << data_file << std::endl;
+    // std::cout << "Number of Points: " << cloud->size() << std::endl;
+    // std::cout << "Size of the voxel grid: " << 2 * radius << std::endl; // Multiplied with two as half size is used (corresponding to the radius)
+    // std::cout << "Number of Voxels: " << num_voxels << std::endl;
+    // std::cout << "Smoothing Kernel: " << smoothing_kernel_width << std::endl;
 
 
 
@@ -77,10 +81,21 @@ int main(int argc, char *argv[])
     pcl::RandomSample <pcl::PointXYZ> random_sampling;
     random_sampling.setInputCloud(cloud);
     random_sampling.setSeed (std::rand ());
-    random_sampling.setSample(perc_points*cloud->size());
+    random_sampling.setSample(perc_points);
     random_sampling.filter(evaluation_points);
 
-    std::cout << "Number of keypoints:" << evaluation_points.size() << "\n" << std::endl;
+
+    std::size_t found = data_file.find_last_of("/");
+    std::string temp_token = data_file.substr(found + 1);
+    std::size_t found2 = temp_token.find_last_of(".");
+
+    std::string save_file_name = temp_token.substr(0, found2);
+    save_file_name = output_folder + save_file_name;
+
+    //Saving keypoints
+    pcl::io::savePCDFile(save_file_name+"_keypoints.pcd", *cloud, evaluation_points, false);
+
+    //std::cout << "Number of keypoints:" << evaluation_points.size() << "\n" << std::endl;
 
 
     // Initialize the variables for the NN search and LRF computation
@@ -100,25 +115,19 @@ int main(int argc, char *argv[])
 
     // Compute the SDV representation for all the points
 
-    std::size_t found = data_file.find_last_of("/");
-    std::string temp_token = data_file.substr(found + 1);
-    std::size_t found2 = data_file.find_last_of(".");
-
-    std::string save_file_name = temp_token.substr(0, found2);
-    save_file_name = output_folder + save_file_name;
 
     // Start the actuall computation
     auto t1 = std::chrono::high_resolution_clock::now();
     computeLocalDepthFeature(cloud, evaluation_points, nearest_neighbors, cloud_lrf, radius, voxel_coordinates, num_voxels, smoothing_factor, save_file_name);
     auto t2 = std::chrono::high_resolution_clock::now();
-    std::cout << "\n---------------------------------------------------------" << std::endl;
-    std::cout << "LRF computation took "
-              << std::chrono::duration_cast<std::chrono::milliseconds>(t2_lrf - t1_lrf).count()
-              << " miliseconds\n";
-    std::cout << "SDV computation took "
-              << std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1).count()
-              << " miliseconds\n";
-    std::cout << "---------------------------------------------------------" << std::endl;
+    // std::cout << "\n---------------------------------------------------------" << std::endl;
+    // std::cout << "LRF computation took "
+    //           << std::chrono::duration_cast<std::chrono::milliseconds>(t2_lrf - t1_lrf).count()
+    //           << " miliseconds\n";
+    // std::cout << "SDV computation took "
+    //           << std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1).count()
+    //           << " miliseconds\n";
+    // std::cout << "---------------------------------------------------------" << std::endl;
 
 
     return 0;
