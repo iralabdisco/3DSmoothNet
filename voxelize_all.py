@@ -16,11 +16,7 @@ subfolders = ["eth/apartment/", "eth/stairs/","eth/plain/","eth/hauptgebaude/", 
 
 problem_files = ["apartment_global.txt", "stairs_global.txt", "plain_global.txt", "hauptgebaude_global.txt", 
     "gazebo_summer_global.txt", "gazebo_winter_global.txt", "wood_summer_global.txt", "wood_autumn_global.txt", 
-<<<<<<< HEAD
     "p2at_met_global.txt", "box_met_global.txt ", "planetary_map_global.txt", "long_office_household_global.txt",  
-=======
-    "p2at_met_global.txt", "box_met_global.txt", "planetary_map_global.txt", "long_office_household_global.txt",  
->>>>>>> e3369fa8994622d24f42750c105a362f1c2d9fd1
     "pioneer_slam_global.txt", "pioneer_slam3_global.txt", "urban05_global.txt"]
 
 for problem, folder in zip(problem_files, subfolders):

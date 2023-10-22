@@ -34,11 +34,7 @@ def main():
     df = df.reset_index()
     n_problems = len(df.index)
 
-<<<<<<< HEAD
     voxelization_parameters =  f"""-k {params.frac_points} -r {params.voxel_size} -n {params.vox_num} -h {params.gauss_width} -o {params.output_dir}"""
-=======
-    voxelization_parameters =  f"""-k {params.num_points} -r {params.voxel_size} -n {params.vox_num} -h {params.gauss_width} -o {params.output_dir}"""
->>>>>>> e3369fa8994622d24f42750c105a362f1c2d9fd1
 
     num_processed = 0
     ## Solve for each problem
