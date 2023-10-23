@@ -1,7 +1,7 @@
 frac_points: 5000
 gauss_width: 1.75
-input_pcd_dir: /SSD/neural_comparison/point_clouds_registration_benchmark/datasets_outlier_removal_mean10_dev3_voxelgrid_0.05/kaist/urban05/
-output_dir: /SSD/neural_comparison/features/3DSmoothNet/kaist/urban05/
-problem_file: /SSD/neural_comparison/point_clouds_registration_benchmark/devel/registration_pairs/urban05_global.txt
+input_pcd_dir: /benchmark/point_clouds_registration_benchmark/dataset_voxelgrid_0.1/planetary/box_met/
+output_dir: /benchmark/experiments/3DSmoothNet/features/planetary/box_met/
+problem_file: /benchmark/point_clouds_registration_benchmark/devel/registration_pairs/box_met_global.txt
 vox_num: 16
 voxel_size: 0.5

@@ -303,6 +303,9 @@ class NetworkBuilder(object):
         # Find all input files
         evaluation_files = glob.glob(self.config.evaluate_input_folder + '*.csv')
 
+        print("EVALUATION FILES")
+        print(evaluation_files)
+
         for file in evaluation_files:
             print('Loading test file: ' + file)
             evaluation_features = np.fromfile(file, dtype=np.float32).reshape(-1, self.config.input_dim)
