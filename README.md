@@ -1,3 +1,5 @@
-1. Generare la smoothed density value (SDV) voxel grid e i keypoints (salvati in file .pcd) con `python voxelize_all.py`, modificando le cartelle di input e destinazione all'inizio del file. I parametri della SDV grid si trovano in `voxel_parameters.yaml`, non modificare quelli corrispondenti alla cartelle di destinazione e input, perché vengono aggiornati automaticamente dallo script che genera i voxel per l'intero benchmark.
-2. Usare lo script `main_cnn.py` per generare le feature a partire da una cartella contenente SDV. Ad esempio `python /home/3DSmoothNet/main_cnn.py --run_mode=test --evaluate_input_folder=/SSD/neural_comparison/features/3DSmoothNet/eth/apartment/ --evaluate_output_folder=/SSD/neural_comparison/features/3DSmoothNet/eth/apartment/ --output_dim=64`. Le feature vengono salvate in una cartella corrispondente al numero di dimensioni, eventualmente spostarle nella cartella principale.
-3. Unire i keypoints e le feature in un unico file utilizzando lo script `join_feature_keypoints.py`. Ad esempio `python /home/3DSmoothNet/join_feature_keypoints.py -f eth/apartment -o eth/apartment`.
+# 3DSmoothNet 
+
+1. Generate the Smoothed Density Valie (SVD) voxel grid and keypoints (saved as .pcd) using the `voxelize_all.py`. Modify the input and output direcotries at the beginning of hte file. The parameters for the SVD grid are stored in the `voxel_parameters.yaml` file. Do not modify the directory parameters in the .yaml file, they are update autmatically by the script.
+2. Use the `run_benchmark_global.py` to generate the features from the SVD rapresentation.
+3. Use the `join_all.py` script to merge keypoints and features in a single .npz file.
