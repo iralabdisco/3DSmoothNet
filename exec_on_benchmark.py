@@ -46,14 +46,14 @@ def main():
         source_base_name = os.path.join(params.output_dir, '{}'.format(problem_id))
         source_pcd.transform(source_transform)
         o3d.io.write_point_cloud(f"{source_base_name}.pcd", source_pcd)
-        os.system(f"/home/3DSmoothNet/3DSmoothNet -f {source_base_name}.pcd {voxelization_parameters}")
+        os.system(f"/home/docker/3DSmoothNet/3DSmoothNet -f {source_base_name}.pcd {voxelization_parameters}")
         os.system(f"rm {source_base_name}.pcd")
 
         ## Extract features from target
         target_file_name = os.path.join(params.input_pcd_dir, target_pcd_filename)
         target_out_name = os.path.join(params.output_dir, target_pcd_filename)
         if not(os.path.isfile(f"{Path(target_out_name).stem}.csv")):   
-            os.system(f"/home/3DSmoothNet/3DSmoothNet -f {target_file_name} {voxelization_parameters}")
+            os.system(f"/home/docker/3DSmoothNet/3DSmoothNet -f {target_file_name} {voxelization_parameters}")
         
 if __name__ == '__main__':
     main()

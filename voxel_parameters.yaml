@@ -1,7 +1,7 @@
 frac_points: 5000
 gauss_width: 1.75
-input_pcd_dir: /benchmark/point_clouds_registration_benchmark/dataset_voxelgrid_0.1/planetary/box_met/
-output_dir: /benchmark/experiments/3DSmoothNet/features/planetary/box_met/
-problem_file: /benchmark/point_clouds_registration_benchmark/devel/registration_pairs/box_met_global.txt
+input_pcd_dir: /benchmark/tum_slam_comparison/pioneer_slam2_025/
+output_dir: /benchmark/tum_slam_comparison/3DSmoothNet/features/pioneer_slam2_025/
+problem_file: /benchmark/tum_slam_comparison/pioneer_slam2_problems.txt
 vox_num: 16
 voxel_size: 0.5

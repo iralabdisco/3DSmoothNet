@@ -3,6 +3,7 @@ build/
 .idea/*
 *.npz
 logs/
+3DSmoothNet
 # Created by https://www.toptal.com/developers/gitignore/api/cmake
 # Edit at https://www.toptal.com/developers/gitignore?templates=cmake
 

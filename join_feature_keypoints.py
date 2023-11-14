@@ -9,7 +9,8 @@ parser.add_argument('--out_folder', '-o', type=str, required = True)
 args = parser.parse_args()
 
 dim_folder = args.cnn_dim + "_dim/"
-files = glob.glob(args.folder+"/" + dim_folder + '/*_3DSmoothNet.npz')
+folder_final = args.folder+"/" + dim_folder
+files = glob.glob(folder_final + '/*_3DSmoothNet.npz')
 
 for file in tqdm(files):
     features = numpy.load(file)['data']
